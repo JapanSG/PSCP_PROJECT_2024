@@ -71,9 +71,10 @@ def yesno_popup(func,popup_message = "This is a popup"):
 ## Main window
 master = tk.Tk(className="Password-saver")
 master.geometry("500x500")
-
-page1 = Frame(master,bg="AntiqueWhite2",height = 1000,width = 1000)
-page2 = Frame(master,bg="AntiqueWhite2",height = 1000,width = 1000)
+Grid.rowconfigure(master, 0, weight=1)
+Grid.columnconfigure(master, 0, weight=1)
+page1 = Frame(master,bg="AntiqueWhite2")
+page2 = Frame(master,bg="AntiqueWhite2")
 page1.grid(row = 0 , column = 0,sticky = "nsew")
 page2.grid(row = 0 , column = 0,sticky = "nsew")
 page_button_frame = Frame(master)
@@ -140,7 +141,7 @@ label2 = Label(
 
 label22 = Label(
     page2,
-    text = "why",
+    text = read_file(),
     font = ("Arial",20)
 )
 
@@ -154,6 +155,7 @@ password_title.grid(row = 1, column = 0, pady = 10)
 password_field.grid(row = 1, column = 1, pady = 10)
 save_button.grid(row = 2, column = 1, sticky = 'E',pady = 10)
 deleteal_button.grid(row=3)
+
 def main():
     '''Driver Code'''
     global master

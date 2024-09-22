@@ -10,12 +10,13 @@ def clear_file() -> None:
 def read_file() -> None:
     '''Read all content in a file'''
     with open("password.txt","r") as file:
-        lines = file.readlines()
-        num = 1
-        for i in range(0,len(lines),2):
-            print(num)
-            print(lines[i],lines[i+1],sep = "")
-            num += 1
+        lines = file.read()
+        return lines
+        # num = 1
+        # for i in range(0,len(lines),2):
+        #     print(num)
+        #     print(lines[i],lines[i+1],sep = "")
+        #     num += 1
 def get_pass(line_num:int)->str:
     '''Return username and password at a specific line'''
     with open("password.txt","r") as file:
