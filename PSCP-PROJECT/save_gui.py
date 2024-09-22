@@ -73,7 +73,7 @@ master = tk.Tk(className="Password-saver")
 master.geometry("500x500")
 
 page1 = Frame(master,bg="AntiqueWhite2",height = 1000,width = 1000)
-page2 = Frame(master,bg="green",height = 1000,width = 1000)
+page2 = Frame(master,bg="AntiqueWhite2",height = 1000,width = 1000)
 page1.grid(row = 0 , column = 0,sticky = "nsew")
 page2.grid(row = 0 , column = 0,sticky = "nsew")
 page_button_frame = Frame(master)
