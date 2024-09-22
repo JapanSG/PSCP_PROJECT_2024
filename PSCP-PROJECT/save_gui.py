@@ -72,27 +72,34 @@ def yesno_popup(func,popup_message = "This is a popup"):
 master = tk.Tk(className="Password-saver")
 master.geometry("500x500")
 
+page1 = Frame(master,bg="AntiqueWhite2",height = 1000,width = 1000)
+page2 = Frame(master,bg="green",height = 1000,width = 1000)
+page1.grid(row = 0 , column = 0,sticky = "nsew")
+page2.grid(row = 0 , column = 0,sticky = "nsew")
+page_button_frame = Frame(master)
+page_button_frame.grid(row = 1,column =0)
+
 username_title = Label(
-    master,
+    page1,
     text = "username",
     font = ("Arial",10)
     )
 
 password_title = Label(
-    master,
+    page1,
     text = "password",
     font = ("Arial",10)
     )
 
 username_field = Entry(
-    master,
+    page1,
     text = "username",
     font = ("Arial",10),
     width = 20
     )
 
 password_field = Entry(
-    master,
+    page1,
     text = "password",
     font = ("Arial",10),
     width = 20,
@@ -100,17 +107,47 @@ password_field = Entry(
     )
 
 save_button = Button(
-    master,
+    page1,
     text = "save",
     command = save_password
     )
 
 deleteal_button = Button(
-    master,
+    page1,
     text = "Clear All",
     command = delete_password
     )
 
+first = Button(
+    page_button_frame,
+    text = "1",
+    width = 10,
+    command = page1.tkraise
+)
+
+second = Button(
+    page_button_frame,
+    text = "2",
+    width = 10,
+    command = page2.tkraise
+)
+
+label2 = Label(
+    page2,
+    text = "View Password",
+    font = ("Arial",20)
+)
+
+label22 = Label(
+    page2,
+    text = "why",
+    font = ("Arial",20)
+)
+
+first.grid(row = 2,column = 0,)
+second.grid(row = 2,column = 1)
+label2.grid(row = 0, column = 0)
+label22.grid(row = 1,column = 0)
 username_title.grid(row = 0, column = 0, pady = 10)
 username_field.grid(row = 0, column = 1, pady = 10)
 password_title.grid(row = 1, column = 0, pady = 10)
