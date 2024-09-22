@@ -136,13 +136,13 @@ second = Button(
 label2 = Label(
     page2,
     text = "View Password",
-    font = ("Arial",20)
+    font = ("Arial",10)
 )
 
 label22 = Label(
     page2,
     text = read_file(),
-    font = ("Arial",20)
+    font = ("Arial",10)
 )
 
 first.grid(row = 2,column = 0,)
