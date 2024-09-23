@@ -24,6 +24,11 @@ def clear_destroy(popup):
     clear_file()
     popup.destroy()
 
+def show_page2():
+    '''show page 2'''
+    label22.config(text = read_file())
+    page2.tkraise()
+
 def popup(popup_message = "This is a popup", button_message = "close"):
     '''Create a popup window'''
     popup = Toplevel(name="confirmation")
@@ -130,7 +135,7 @@ second = Button(
     page_button_frame,
     text = "2",
     width = 10,
-    command = page2.tkraise
+    command = show_page2
 )
 
 label2 = Label(
