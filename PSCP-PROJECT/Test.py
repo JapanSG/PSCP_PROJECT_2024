@@ -39,13 +39,23 @@ upper.place(relx=0.55,rely=0.4,anchor=tkinter.CENTER)
 lower.place(relx=0.55,rely=0.5,anchor=tkinter.CENTER)
 digits.place(relx=0.55,rely=0.6,anchor=tkinter.CENTER)
 punctuation.place(relx=0.55,rely=0.7,anchor=tkinter.CENTER)
+#ลองsystem
 button = customtkinter.CTkButton(master=a,width=120,height=32,border_width=0,corner_radius=8,text="print",command=showed)
 button.place(relx=0.5,rely=0.8,anchor=tkinter.CENTER)
 text_result = tkinter.StringVar(value="")
 label_result = customtkinter.CTkLabel(master=a,textvariable=text_result,
                                         width=220,height=60,text_color="black",font=("Arial",25),fg_color=("blue"))
 label_result.place(relx=0.55,rely=0.9,anchor=tkinter.CENTER)
-
-
+#ลองสร้างปิด/เปิดตา
+def check():
+    if check_test.get() == 'on':
+        entry.config(show='')
+    else:
+        entry.config(show='*')
+check_test = customtkinter.StringVar(value='off')
+entry = Entry(a,show='*')
+entry.place(relx=0.55,rely=0.1)
+check_pass = customtkinter.CTkCheckBox(a,text="show",command=check,variable=check_test,onvalue='on',offvalue='off')
+check_pass.place(relx=0.55,rely=0.2)
 
 a.mainloop()
