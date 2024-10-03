@@ -2,7 +2,8 @@
 import tkinter as tk
 from tkinter import *
 from save import *
-## buttons method
+# buttons method
+# Author Thanakrit Sriphiphattana
 def save_password():
     '''Save password to a file(not finished)'''
     global username_field, password_field
