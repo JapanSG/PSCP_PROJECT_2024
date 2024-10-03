@@ -23,11 +23,11 @@ def get_pass(line_num:int)->str:
         lines = file.readlines()
         line_num = line_num*2-2
         return f"{lines[line_num]}{lines[line_num+1]}"
-def main():
+def __main():
     '''Driver Code'''
     username = input()
     password = input()
     add_password(username,password)
     read_file()
 if __name__ == "__main__":
-    main()
+    __main()

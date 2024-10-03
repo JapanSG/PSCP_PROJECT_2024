@@ -2,7 +2,6 @@
 import tkinter as tk
 from tkinter import *
 from save import *
-
 ## buttons method
 def save_password():
     '''Save password to a file(not finished)'''
