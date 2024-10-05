@@ -2,7 +2,7 @@
 from tkinter import *
 from customtkinter import *
 from PIL import Image
-APP_FONT = ("K2D",24)
+H1 = ("K2D",24)
 WHITE = "#E3F1FB"
 BLUE = "#1650CC"
 DARK_BLUE = "#17377D"
@@ -41,8 +41,19 @@ class NavBar(CTkFrame):
         ).pack(side = "top")
 
         title_frame = TitleFrame(self)
-        title_frame.pack(side = "top",fill = "y")
+        title_frame.pack(side = "top",fill = "y",pady = (0,10))
 
+        generate_icon = CTkImage(light_image=Image.open("Assets/Create.png"),size = (20,20))
+        generate_btn = NavButton(self,"Generate",generate_icon)
+        generate_btn.pack(side = "top",fill = "x", pady = (10,10))
+
+        view_icon = CTkImage(light_image=Image.open("Assets/Remove red eye.png"),size = (20,20))
+        view_btn = NavButton(self,"View",view_icon)
+        view_btn.pack(side = "top",fill = "x", pady = (10,10))
+
+        encrypt_icon = CTkImage(light_image=Image.open("Assets/Lock.png"),size = (20,20))
+        encrypt_btn = NavButton(self,"Encrypt/Decrypt",encrypt_icon)
+        encrypt_btn.pack(side = "top",fill = "x", pady = (10,10))
 class TitleFrame(CTkFrame):
     '''Menu Title Frame Class'''
     def __init__(self,master):
@@ -66,7 +77,7 @@ class TitleFrame(CTkFrame):
             titlemenu,
             text = "ENCRYPT|MINDS",
             text_color = DARK_BLUE,
-            font = APP_FONT,
+            font = H1,
             width = 310,
             height = 10,
             fg_color = WHITE,
@@ -77,9 +88,60 @@ class TitleFrame(CTkFrame):
         line = CTkFrame(self, height = 2, width = 258, fg_color = LIGHT_BLUE)
         line.pack(side = "top",fill = "both",pady = (10,0))
 
+class NavButton(CTkFrame):
+    '''NavButton Class'''
+
+    class MenuButton(CTkButton):
+        '''MenuButton Class'''
+
+        def __init__(self,master:CTkFrame,text:str = "CTkButton") -> None:
+            '''Constructor'''
+            super().__init__(
+                master,
+                width = 230,
+                height = 40,
+                text = text,
+                font = H1,
+                text_color = DARK_BLUE,
+                bg_color = WHITE,
+                fg_color = WHITE,
+                hover = True,
+                corner_radius = 0,
+                border_color = WHITE,
+                border_width = 0
+            )
+
+    def __init__(self, master:CTk, text:str, icon:CTkImage):
+        '''Constructor'''
+        super().__init__(
+            master,
+            width = 280,
+            height = 40,
+            bg_color = 'transparent',
+            fg_color = 'transparent'
+        )
+        self.pack_propagate(0)
+
+        btn = self.MenuButton(self,text = text)
+        btn.pack(side = "left")
+        
+        img_frame = CTkFrame(self,
+                       width = 50,
+                       height = 40,
+                       corner_radius = 30,
+                       fg_color = WHITE,
+                       border_color = WHITE,
+                       border_width = 0,
+                       background_corner_colors = (WHITE,BLUE,BLUE,WHITE)
+        )
+        img_frame.pack(side = "left")
+        img_frame.pack_propagate(0)
+        icon_label = CTkLabel(img_frame, image = icon,text = "")
+        icon_label.pack(side = "left",expand = True)
+
 def run():
     '''Driver Code'''
-    global APP_FONT
+    global H1
     app = App()
     app.mainloop()
 if __name__ == "__main__":
