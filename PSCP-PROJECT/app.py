@@ -16,13 +16,13 @@ class page1(CTkFrame):
         super().__init__(master,fg_color= 'green',corner_radius = 0)
 
 class page2(CTkFrame):
-    '''Page 1'''
+    '''Page 2'''
     def __init__(self,master):
         '''Constructor'''
         super().__init__(master,fg_color= 'blue',corner_radius = 0)
 
 class page3(CTkFrame):
-    '''Page 1'''
+    '''Page 3'''
     def __init__(self,master):
         '''Constructor'''
         super().__init__(master,fg_color= 'red',corner_radius = 0)
