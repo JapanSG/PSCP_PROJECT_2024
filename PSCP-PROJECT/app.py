@@ -2,11 +2,32 @@
 from tkinter import *
 from customtkinter import *
 from PIL import Image
+
 H1 = ("K2D",24)
 WHITE = "#E3F1FB"
 BLUE = "#1650CC"
 DARK_BLUE = "#17377D"
 LIGHT_BLUE = "#8AA7E6"
+
+class page1(CTkFrame):
+    '''Page 1'''
+    def __init__(self,master):
+        '''Constructor'''
+        super().__init__(master,fg_color= 'green',corner_radius = 0)
+
+class page2(CTkFrame):
+    '''Page 1'''
+    def __init__(self,master):
+        '''Constructor'''
+        super().__init__(master,fg_color= 'blue',corner_radius = 0)
+
+class page3(CTkFrame):
+    '''Page 1'''
+    def __init__(self,master):
+        '''Constructor'''
+        super().__init__(master,fg_color= 'red',corner_radius = 0)
+
+curr_page = page1
 
 class App(CTk):
     '''App Class'''
@@ -17,12 +38,41 @@ class App(CTk):
         self.geometry("1024x768")
         self.title("Password Generator")
         self.resizable(width =False, height = False)
-        navbar = NavBar(self)
-        navbar.pack(side = "left",fill = "y")
-        navbar.pack_propagate(False)
+        self.navbar = NavBar(self)
+        self.navbar.pack(side = "left",fill = "y")
+        self.navbar.pack_propagate(False)
+        self.page = page1(self)
+        self.page.pack(side = "left", expand = True,fill = "both")
+
+class NavBarClose(CTkFrame):
+    '''Closed NavBar'''
+
+    def __init__(self,master:CTk):
+        '''Contructor'''
+        super().__init__(
+            master,
+            fg_color = BLUE,
+            width = 70,
+            corner_radius = 0
+        )
+        self.pack_propagate(0)
+        menu_image = CTkImage(light_image=Image.open("Assets/Menu.png"),size = (40,40))
+        menu_btn = CTkButton(self, image = menu_image,text = "",width=0,height= 0,fg_color=BLUE,command = lambda: NavBarClose.open(master))
+        menu_btn.pack(side = "left",padx = (10,0))
+
+    def open(app:App):
+        '''open Menu'''
+        global curr_page
+        app.navbar.destroy()
+        app.navbar = NavBar(app)
+        app.navbar.pack(side = "left", fill = "y")
+        app.page.destroy()
+        app.page = curr_page(app)
+        app.page.pack(side = "left", expand = True,fill = "both")
 
 class NavBar(CTkFrame):
     '''NavBar Class'''
+
     def __init__(self,master:CTk):
         '''Contructor'''
         super().__init__(
@@ -32,61 +82,64 @@ class NavBar(CTkFrame):
             corner_radius = 0
         )
 
-        CTkFrame( #Padding
-            self,
-            fg_color = BLUE,
-            width = 310,
-            height= 40,
-            corner_radius = 0
-        ).pack(side = "top")
+        title_frame = TitleFrame(self,master)
+        title_frame.pack(side = "top",fill = "x",pady = (40,10))
 
-        title_frame = TitleFrame(self)
-        title_frame.pack(side = "top",fill = "y",pady = (0,10))
-
-        generate_icon = CTkImage(light_image=Image.open("Assets/Create.png"),size = (20,20))
-        generate_btn = NavButton(self,"Generate",generate_icon)
+        generate_icon = CTkImage(light_image = Image.open("Assets/Create.png"), size = (20,20))
+        generate_btn = NavButton(self, master, page1, "Generate", generate_icon)
         generate_btn.pack(side = "top",fill = "x", pady = (10,10))
 
-        view_icon = CTkImage(light_image=Image.open("Assets/Remove red eye.png"),size = (20,20))
-        view_btn = NavButton(self,"View",view_icon)
+        view_icon = CTkImage(light_image = Image.open("Assets/Remove red eye.png"), size = (20,20))
+        view_btn = NavButton(self,master, page2, "View", view_icon)
         view_btn.pack(side = "top",fill = "x", pady = (10,10))
 
-        encrypt_icon = CTkImage(light_image=Image.open("Assets/Lock.png"),size = (20,20))
-        encrypt_btn = NavButton(self,"Encrypt/Decrypt",encrypt_icon)
+        encrypt_icon = CTkImage(light_image = Image.open("Assets/Lock.png"), size = (20,20))
+        encrypt_btn = NavButton(self,master, page3, "Encrypt/Decrypt", encrypt_icon)
         encrypt_btn.pack(side = "top",fill = "x", pady = (10,10))
+
 class TitleFrame(CTkFrame):
     '''Menu Title Frame Class'''
-    def __init__(self,master):
+    def __init__(self,master,app):
         super().__init__(
             master,
             fg_color = BLUE,
-            width = 270,
-            height = 59,
+            width = 310,
+            height = 60,
             corner_radius = 0
         )
         self.pack_propagate(0)
 
-        titlemenu = CTkFrame(self, fg_color = BLUE)
-        titlemenu.pack(side = "top")
+        titlemenu = CTkFrame(self, fg_color = BLUE,width = 310)
+        titlemenu.pack(side = "top",fill = "x")
 
         menu_image = CTkImage(light_image=Image.open("Assets/Menu.png"),size = (40,40))
-        menu_label = CTkLabel(titlemenu, image = menu_image,text = "")
-        menu_label.pack(side = "left")
+        menu_btn = CTkButton(titlemenu, image = menu_image,text = "",width=0,height= 0,fg_color=BLUE,command = lambda: TitleFrame.close(app))
+        menu_btn.pack(side = "left",padx = (10,0))
 
         title_label =  CTkLabel(
             titlemenu,
             text = "ENCRYPT|MINDS",
             text_color = DARK_BLUE,
             font = H1,
-            width = 310,
-            height = 10,
+            width = 208,
+            height = 30,
             fg_color = WHITE,
             corner_radius = 10
         )
         title_label.pack(side = "left", padx = (10,0))
 
-        line = CTkFrame(self, height = 2, width = 258, fg_color = LIGHT_BLUE)
-        line.pack(side = "top",fill = "both",pady = (10,0))
+        line = CTkFrame(self, height = 2, width = 270, fg_color = LIGHT_BLUE)
+        line.pack(side = "top",pady = (10,0))
+
+    def close(app:App):
+        '''close menu'''
+        global curr_page
+        app.navbar.destroy()
+        app.navbar = NavBarClose(app)
+        app.navbar.pack(side = "left",fill = "y")
+        app.page.destroy()
+        app.page = curr_page(app)
+        app.page.pack(side = "left", expand = True, fill = "both")
 
 class NavButton(CTkFrame):
     '''NavButton Class'''
@@ -94,7 +147,7 @@ class NavButton(CTkFrame):
     class MenuButton(CTkButton):
         '''MenuButton Class'''
 
-        def __init__(self,master:CTkFrame,text:str = "CTkButton") -> None:
+        def __init__(self, master:CTkFrame, app:App, page, text:str = "CTkButton") -> None:
             '''Constructor'''
             super().__init__(
                 master,
@@ -105,13 +158,22 @@ class NavButton(CTkFrame):
                 text_color = DARK_BLUE,
                 bg_color = WHITE,
                 fg_color = WHITE,
-                hover = True,
+                hover = False,
                 corner_radius = 0,
                 border_color = WHITE,
-                border_width = 0
+                border_width = 0,
+                command = lambda : NavButton.MenuButton.change_page(app,page)
             )
 
-    def __init__(self, master:CTk, text:str, icon:CTkImage):
+        def change_page(app:App,page):
+            '''Change page'''
+            global curr_page
+            app.page.destroy()
+            app.page = page(app)
+            app.page.pack(side ='left',expand = True, fill = "both")
+            curr_page = page
+
+    def __init__(self, master:CTk, app:App, page, text:str, icon:CTkImage):
         '''Constructor'''
         super().__init__(
             master,
@@ -122,7 +184,7 @@ class NavButton(CTkFrame):
         )
         self.pack_propagate(0)
 
-        btn = self.MenuButton(self,text = text)
+        btn = self.MenuButton(self, app, page, text = text)
         btn.pack(side = "left")
         
         img_frame = CTkFrame(self,
