@@ -36,7 +36,7 @@ class PasswordGeneratorApp:
         upper.place(relx=0.2, rely=0.2, anchor=tkinter.CENTER)
         lower.place(relx=0.2, rely=0.3, anchor=tkinter.CENTER)
         digits.place(relx=0.7, rely=0.2, anchor=tkinter.CENTER)
-        punctuation.place(relx=0.7, rely=0.3, anchor=tkinter.CENTER)
+        punctuation.place(relx=0.73, rely=0.3, anchor=tkinter.CENTER)
 
     def create_password_button(self):
         button = customtkinter.CTkButton(master=self.root, width=120, height=32, border_width=0,
@@ -51,8 +51,8 @@ class PasswordGeneratorApp:
 
 
     def create_slider(self):
-        length_label = customtkinter.CTkLabel(self.root, textvariable=self.length_label_var, font=H1)
-        length_label.place(relx=0.5, rely=0.37, anchor=tkinter.CENTER)
+        length_label = customtkinter.CTkLabel(self.root, textvariable=self.length_label_var, font=H1,fg_color="white",corner_radius=60,width=50)
+        length_label.place(relx=0.5, rely=0.39, anchor=tkinter.CENTER)
 
         slider_label = customtkinter.CTkLabel(self.root, text="Password Length", font=H1)
         slider_label.place(relx=0.5, rely=0.34, anchor=tkinter.CENTER)
@@ -60,7 +60,7 @@ class PasswordGeneratorApp:
         self.slider = customtkinter.CTkSlider(master=self.root, from_=0, to=20, number_of_steps=16,
                                               command=self.update_length_label)
         self.slider.set(0)  # Default length
-        self.slider.place(relx=0.5, rely=0.4, anchor=tkinter.CENTER)
+        self.slider.place(relx=0.5, rely=0.45, anchor=tkinter.CENTER)
 
     def check(self):
         charlist = ''
