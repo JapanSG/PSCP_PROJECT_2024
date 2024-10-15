@@ -1,0 +1,13 @@
+import time
+
+def timer() :
+    password = len(input())
+    start_time = time.time()
+
+    end_time = time.time()
+
+    print(f"Time taken: {end_time - start_time:.10f} seconds")
+
+timer()
+
+#final
