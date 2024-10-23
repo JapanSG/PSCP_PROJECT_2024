@@ -1,5 +1,5 @@
 """decode encode prototype"""
-import tkinter as tk
+import tkinter as tk # จะเปลี่ยนไปใช้ custommer
 from tkinter import messagebox
 import base64
 
@@ -49,3 +49,4 @@ entry_result = tk.Entry(root, width=50)
 entry_result.grid(row=2, column=1, padx=10, pady=10)
 
 root.mainloop()
+
