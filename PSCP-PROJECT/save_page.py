@@ -16,7 +16,7 @@ class SavePage(CTkFrame):
             corner_radius = 0
         )
         self.pack_propagate(0)
-        
+        label = CTkLabel(master,text = "Password Viewer", text_color = DARK_BLUE)
 def __main():
     '''Driver Code'''
 

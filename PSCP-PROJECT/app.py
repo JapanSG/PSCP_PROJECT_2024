@@ -4,6 +4,7 @@ from tkinter import *
 from customtkinter import *
 from PIL import Image
 from Chisanupong import PasswordGeneratorApp
+from save_page import *
 H1 = ("K2D",24)
 WHITE = "#E3F1FB"
 BLUE = "#1650CC"
@@ -32,7 +33,7 @@ class page3(CTkFrame):
 
 pages ={
     1 : page1,
-    2 : page2,
+    2 : SavePage,
     3 : page3
 }
 
