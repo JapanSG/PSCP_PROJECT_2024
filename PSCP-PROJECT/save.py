@@ -4,15 +4,6 @@ import json
 PATH = os.path.dirname(os.path.dirname(__file__))
 file_path = os.path.join(PATH,"password.json")
 
-testdict = {
-    1 : {"website" : "Google", 
-         "username": "JapanSG",
-         "password": "12345678"},
-    2 : {"website" : "Twitter",
-         "username" : "Hello",
-         "password": "World"
-        }
-}
 def add_password(website:str, username : str, password : str) -> None:
     '''Add username and password to a file'''
     num = 1
