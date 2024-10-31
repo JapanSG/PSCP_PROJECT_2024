@@ -1,4 +1,6 @@
 H1 = ("K2D",24)
+H1_BOLD = ("K2D",24,"bold")
+P = ("K2D",16)
 WHITE = "#E3F1FB"
 BLUE = "#1650CC"
 DARK_BLUE = "#17377D"

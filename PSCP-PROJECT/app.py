@@ -5,6 +5,7 @@ from customtkinter import *
 from PIL import Image
 from Chisanupong import PasswordGeneratorApp
 from save_page import *
+
 H1 = ("K2D",24)
 WHITE = "#E3F1FB"
 BLUE = "#1650CC"
@@ -23,8 +24,8 @@ class page2(CTkFrame):
     '''Page 2'''
     def __init__(self,master):
         '''Constructor'''
-        super().__init__(master,fg_color= 'blue',corner_radius = 0)
-
+        super().__init__(master, corner_radius = 0)
+    
 class page3(CTkFrame):
     '''Page 3'''
     def __init__(self,master):
