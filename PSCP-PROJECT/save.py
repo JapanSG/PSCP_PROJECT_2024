@@ -1,33 +1,49 @@
 '''save'''
-def add_password(username : str, password : str) -> None:
+import os
+import json
+PATH = os.path.dirname(os.path.dirname(__file__))
+file_path = os.path.join(PATH,"password.json")
+
+testdict = {
+    1 : {"website" : "Google", 
+         "username": "JapanSG",
+         "password": "12345678"},
+    2 : {"website" : "Twitter",
+         "username" : "Hello",
+         "password": "World"
+        }
+}
+def add_password(website:str, username : str, password : str) -> None:
     '''Add username and password to a file'''
-    with open("password.txt","a") as file:
-        file.write(f"username: {username}\n")
-        file.write(f"password: {password}\n")
+    num = 1
+    dct = {}
+    if os.path.exists(file_path) and os.path.getsize(file_path):
+        with open(file_path,"r") as file:
+            dct = json.load(file)
+            num = len(dct)+1
+    temp = {num: {"website" : website, "username" : username, "password": password}}
+    dct.update(temp)
+    with open(file_path,"w") as file:
+        json.dump(dct, file)
+
 def clear_file() -> None:
     '''Clear all content in a file'''
-    open("password.txt","w").close()
+    open(file_path,"w").close()
+
 def read_file() -> None:
     '''Read all content in a file'''
-    with open("password.txt","r") as file:
-        lines = file.read()
-        return lines
-        # num = 1
-        # for i in range(0,len(lines),2):
-        #     print(num)
-        #     print(lines[i],lines[i+1],sep = "")
-        #     num += 1
-def get_pass(line_num:int)->str:
-    '''Return username and password at a specific line'''
-    with open("password.txt","r") as file:
-        lines = file.readlines()
-        line_num = line_num*2-2
-        return f"{lines[line_num]}{lines[line_num+1]}"
+    with open(file_path,"r") as file:
+        return json.load(file)
+
+def get_pass(key:int)->str:
+    '''Return username and password at a key'''
+    with open(file_path,"r") as file:
+        dct = json.load(file)
+        return dct[str(key)]
+
 def __main():
     '''Driver Code'''
-    username = input()
-    password = input()
-    add_password(username,password)
-    read_file()
+    add_password("Yahoo", "Rays", "password1234")
+    # print(get_pass(1))
 if __name__ == "__main__":
     __main()
