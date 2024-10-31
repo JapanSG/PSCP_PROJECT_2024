@@ -24,6 +24,7 @@ class PasswordGeneratorApp:
         self.create_result_label()
         self.create_slider()
         self.create_topic()
+        self.createcopybutton()
     def create_checkboxes(self):
         upper = customtkinter.CTkCheckBox(self.root, text="Uppercase", command=self.check,
                                           variable=self.check_upper, onvalue="on", offvalue="off",font=H1,text_color="white")
@@ -36,23 +37,27 @@ class PasswordGeneratorApp:
         upper.place(relx=0.2, rely=0.2, anchor=tkinter.CENTER)
         lower.place(relx=0.2, rely=0.3, anchor=tkinter.CENTER)
         digits.place(relx=0.7, rely=0.2, anchor=tkinter.CENTER)
-        punctuation.place(relx=0.7, rely=0.3, anchor=tkinter.CENTER)
+        punctuation.place(relx=0.73, rely=0.3, anchor=tkinter.CENTER)
 
     def create_password_button(self):
         button = customtkinter.CTkButton(master=self.root, width=120, height=32, border_width=0,
                                          corner_radius=8, text="Generate", command=self.show_password)
-        button.place(relx=0.5, rely=0.8, anchor=tkinter.CENTER)
+        button.place(relx=0.5, rely=0.6, anchor=tkinter.CENTER)
 
     def create_result_label(self):
         label_result = customtkinter.CTkLabel(master=self.root, textvariable=self.text_result,
-                                              width=220, height=60, text_color="black",
-                                              font=H1, fg_color=("blue"))
-        label_result.place(relx=0.55, rely=0.9, anchor=tkinter.CENTER)
+                                              width=500, height=60, text_color="black",
+                                              font=H1, fg_color=("white"),anchor=customtkinter.CENTER,corner_radius=60)
+        label_result.place(relx=0.5, rely=0.7, anchor=tkinter.CENTER)
 
+    def createcopybutton(self):
+        result = customtkinter.CTkButton(master=self.root,width=50,height=50,fg_color="black",command=self.copys,corner_radius=40,
+                                         text="COPY")
+        result.place(relx=0.5,rely=0.8,anchor=customtkinter.CENTER)
 
     def create_slider(self):
-        length_label = customtkinter.CTkLabel(self.root, textvariable=self.length_label_var, font=H1)
-        length_label.place(relx=0.5, rely=0.37, anchor=tkinter.CENTER)
+        length_label = customtkinter.CTkLabel(self.root, textvariable=self.length_label_var, font=H1,fg_color="white",corner_radius=60,width=50)
+        length_label.place(relx=0.5, rely=0.39, anchor=tkinter.CENTER)
 
         slider_label = customtkinter.CTkLabel(self.root, text="Password Length", font=H1)
         slider_label.place(relx=0.5, rely=0.34, anchor=tkinter.CENTER)
@@ -60,7 +65,7 @@ class PasswordGeneratorApp:
         self.slider = customtkinter.CTkSlider(master=self.root, from_=0, to=20, number_of_steps=16,
                                               command=self.update_length_label)
         self.slider.set(0)  # Default length
-        self.slider.place(relx=0.5, rely=0.4, anchor=tkinter.CENTER)
+        self.slider.place(relx=0.5, rely=0.45, anchor=tkinter.CENTER)
 
     def check(self):
         charlist = ''
@@ -98,7 +103,11 @@ class PasswordGeneratorApp:
         height=50
         )
         x.place(relx=0.5, rely=0.1, anchor=tkinter.CENTER)
-        
+    
+    def copys(self):
+        text = self.text_result.get()
+        self.root.clipboard_clear()
+        self.root.clipboard_append(text)
 if __name__ == "__main__":
     root = customtkinter.CTk()
     app = PasswordGeneratorApp(root)
