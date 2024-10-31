@@ -3,7 +3,7 @@ import tkinter
 import string
 import random
 H1 = ("K2D",24)
-a = 1
+
 class PasswordGeneratorApp:
     def __init__(self, master):
         '''Constructor that accepts a master widget'''
