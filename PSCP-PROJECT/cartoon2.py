@@ -3,9 +3,10 @@ import time
 import threading
 import string
 import random
-
+from PIL import Image
+import os
 H1 = ("K2D", 24)
-
+PATH = os.path.dirname(os.path.dirname(__file__))
 class PasswordTool:
     def __init__(self, master):
         self.master = master
@@ -20,7 +21,8 @@ class PasswordTool:
         self.check_punctuation = StringVar(value="off")
         self.text_result = StringVar(value="")
         self.time_label = CTkLabel(self.frame, text="", font=("K2D", 14), text_color="#878787")
-
+        self.username_var = StringVar(value="")
+        self.webs_var = StringVar(value="")
         self.create_ui()
         
     def create_ui(self):
@@ -31,6 +33,8 @@ class PasswordTool:
         self.create_result_label()
         self.create_time_label()
         self.create_check_button()
+        self.create_copy_button()
+        self.creat_username_web()
 
     def create_topic(self):
         topic_frame = CTkFrame(self.frame, width=420, height=70, fg_color="white", corner_radius=30)
@@ -95,18 +99,18 @@ class PasswordTool:
         self.label_result = CTkLabel(
             self.frame,
             textvariable=self.text_result,
-            width=500,
+            width=250,
             height=60,
             text_color="black",
             font=H1,
             fg_color=("white"),
-            anchor=CENTER,
+            anchor=W,
             corner_radius=30
         )
-        self.label_result.grid(row=7, column=0, columnspan=2, pady=(10, 10))
+        self.label_result.grid(row=9, column=0, columnspan=2, pady=(10, 10))
 
     def create_time_label(self):
-        self.time_label.grid(row=8, column=0, columnspan=2, pady=(10, 10))
+        self.time_label.grid(row=9, column=0, columnspan=2, pady=(10, 10))
 
     def create_check_button(self):
         self.check_button = CTkButton(
@@ -119,7 +123,39 @@ class PasswordTool:
             font=("K2D", 24),
             fg_color="#17377D"
         )
-        self.check_button.grid(row=9, column=0, columnspan=2, pady=(10, 20))
+        self.check_button.grid(row=10, column=0, columnspan=2, pady=(10, 20))
+
+    def create_copy_button(self):
+        copy_image = CTkImage(light_image=Image.open(os.path.join(PATH,"Assets/content_copy.png")),size = (40,40))
+        result = CTkButton(
+            master=self.master,
+            width=50,
+            height=60,
+            fg_color="transparent",
+            command=self.copys,
+            text="",
+            image=copy_image,
+            corner_radius=0,
+        )
+        result.place(relx=0.9,rely=0.8)
+
+    def creat_username_web(self):
+        username = CTkEntry(
+            self.frame,
+            font=H1,
+            textvariable=self.username_var,
+            width=300,
+            height=50
+            )
+        webs = CTkEntry(
+            self.frame,
+            font=H1,
+            textvariable=self.webs_var,
+            width=300,
+            height=50
+        )
+        username.grid(row=7,column=0,columnspan=2, pady=(10, 10))
+        webs.grid(row=8,column=0,columnspan=2, pady=(10, 10))
 
     def check(self):
         charlist = ''
@@ -132,6 +168,11 @@ class PasswordTool:
         if self.check_punctuation.get() == 'on':
             charlist += string.punctuation
         return charlist
+    
+    def copys(self):
+        text = self.text_result.get()
+        self.master.clipboard_clear()
+        self.master.clipboard_append(text)
 
     def generate_password(self):
         start_time = time.time()
