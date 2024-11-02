@@ -21,10 +21,12 @@ def clear_file() -> None:
     '''Clear all content in a file'''
     open(file_path,"w").close()
 
-def read_file() -> None:
+def read_file() -> dict:
     '''Read all content in a file'''
-    with open(file_path,"r") as file:
-        return json.load(file)
+    if os.path.exists(file_path) and os.path.getsize(file_path):
+        with open(file_path,"r") as file:
+            return json.load(file)
+    return {}
 
 def get_pass(key:int)->str:
     '''Return username and password at a key'''
@@ -34,7 +36,7 @@ def get_pass(key:int)->str:
 
 def __main():
     '''Driver Code'''
-    add_password("Yahoo", "Rays", "password1234")
-    # print(get_pass(1))
+    clear_file()
+    add_password("test.com","Ray","12345678")
 if __name__ == "__main__":
     __main()
