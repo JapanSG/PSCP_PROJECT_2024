@@ -4,6 +4,7 @@ import threading
 import string
 import random
 
+
 H1 = ("K2D", 24)
 
 class PasswordTool:
@@ -19,44 +20,45 @@ class PasswordTool:
         self.check_digits = StringVar(value="off")
         self.check_punctuation = StringVar(value="off")
         self.text_result = StringVar(value="")
-        self.time_label = CTkLabel(self.frame, text="", font=("K2D", 14), text_color="#878787")
+        self.time_label = CTkLabel(self.frame, text="", font=("K2D", 14), text_color="#ebf2f5")
 
         self.create_ui()
-        
+
     def create_ui(self):
         self.create_topic()
         self.create_checkboxes()
         self.create_password_length()
+        self.create_difficulty_buttons()
         self.create_password_button()
         self.create_result_label()
         self.create_time_label()
         self.create_check_button()
 
     def create_topic(self):
-        topic_frame = CTkFrame(self.frame, width=420, height=70, fg_color="white", corner_radius=30)
+        topic_frame = CTkFrame(self.frame, width=420, height=70, fg_color="#E3F1FB", corner_radius=30)
         topic_frame.grid(row=0, column=0, columnspan=2, pady=(10, 20), padx=(10, 10), sticky="nsew")
         
         topic_label = CTkLabel(
             topic_frame,
             text="Password Generator",
             font=("K2D", 36),
-            text_color="black"
+            text_color="#17377D"
         )
         topic_label.place(relx=0.5, rely=0.5, anchor="center")
 
     def create_checkboxes(self):
         upper = CTkCheckBox(self.frame, text="Uppercase", command=self.check,
                             variable=self.check_upper, onvalue="on", offvalue="off",
-                            font=H1, text_color="white")
+                            font=H1, text_color="white", border_color="white")
         lower = CTkCheckBox(self.frame, text="Lowercase", command=self.check,
                             variable=self.check_lower, onvalue="on", offvalue="off",
-                            font=H1, text_color="white")
+                            font=H1, text_color="white", border_color="white")
         digits = CTkCheckBox(self.frame, text="Digits", command=self.check,
                              variable=self.check_digits, onvalue="on", offvalue="off",
-                             font=H1, text_color="white")
+                             font=H1, text_color="white", border_color="white")
         punctuation = CTkCheckBox(self.frame, text="Punctuation", command=self.check,
                                   variable=self.check_punctuation, onvalue="on", offvalue="off",
-                                  font=H1, text_color="white")
+                                  font=H1, text_color="white", border_color="white")
 
         upper.grid(row=1, column=0, padx=(10, 10), pady=(5, 5), sticky="w")
         lower.grid(row=2, column=0, padx=(10, 10), pady=(5, 5), sticky="w")
@@ -70,13 +72,48 @@ class PasswordTool:
         length_label = CTkLabel(length_frame, textvariable=self.length_label_var, font=H1, text_color="black")
         length_label.place(relx=0.5, rely=0.5, anchor="center")
 
-        slider_label = CTkLabel(self.frame, text="Password Length", font=H1)
-        slider_label.grid(row=4, column=0, columnspan=2, pady=(10, 10), sticky="ew")
-
         self.slider = CTkSlider(master=self.frame, from_=0, to=20, number_of_steps=20,
                                 command=self.update_length_label, width=370)
         self.slider.set(0)
-        self.slider.grid(row=5, column=0, columnspan=2, pady=(10, 10))
+        self.slider.grid(row=4, column=0, columnspan=2, pady=(10, 10))
+
+    def create_difficulty_buttons(self):
+        button_frame = CTkFrame(self.frame, fg_color="transparent")
+        button_frame.grid(row=5, column=0, columnspan=2, pady=(5, 5), sticky="nsew")
+
+        e = CTkButton(button_frame, text="Easy", font=H1, command=self.boxeasy, fg_color="#E3F1FB", text_color="#17377D")
+        e.pack(side=LEFT, padx=(10, 5))
+
+        m = CTkButton(button_frame, text="Medium", font=H1, command=self.boxmedium, fg_color="#E3F1FB", text_color="#17377D")
+        m.pack(side=LEFT, padx=(82, 5))
+
+        h = CTkButton(button_frame, text="Hard", font=H1, command=self.boxhard, fg_color="#E3F1FB", text_color="#17377D")
+        h.pack(side=LEFT, padx=(80, 10))
+
+
+    def boxeasy(self):
+        self.slider.set(4)
+        self.length_label_var.set(4)
+        self.check_lower.set("on")
+        self.check_digits.set("on")
+        self.check_upper.set("off")
+        self.check_punctuation.set("off")
+
+    def boxmedium(self):
+        self.slider.set(8)
+        self.length_label_var.set(8)
+        self.check_lower.set("on")
+        self.check_upper.set("on")
+        self.check_digits.set("on")
+        self.check_punctuation.set("off")
+
+    def boxhard(self):
+        self.slider.set(12)
+        self.length_label_var.set(12)
+        self.check_lower.set("on")
+        self.check_upper.set("on")
+        self.check_digits.set("on")
+        self.check_punctuation.set("on")
 
     def create_password_button(self):
         self.generate_button = CTkButton(
@@ -89,24 +126,25 @@ class PasswordTool:
             font=("K2D", 24),
             fg_color="#17377D"
         )
-        self.generate_button.grid(row=6, column=0, columnspan=2, pady=(10, 10))
+        self.generate_button.grid(row=7, column=0, columnspan=2, pady=(10, 10))
 
     def create_result_label(self):
         self.label_result = CTkLabel(
             self.frame,
-            textvariable=self.text_result,
-            width=500,
-            height=60,
-            text_color="black",
-            font=H1,
-            fg_color=("white"),
+            # textvariable=self.text_result,
+            text="Your Password",
+            width=324,
+            height=37,
+            text_color="#71797e",
+            font=("K2D", 20),
+            fg_color=("#E3F1FB"),
             anchor=CENTER,
-            corner_radius=30
+            corner_radius=10
         )
-        self.label_result.grid(row=7, column=0, columnspan=2, pady=(10, 10))
+        self.label_result.grid(row=8, column=0, columnspan=2, pady=(10, 10))
 
     def create_time_label(self):
-        self.time_label.grid(row=8, column=0, columnspan=2, pady=(10, 10))
+        self.time_label.grid(row=9, column=0, columnspan=2, pady=(10, 10))
 
     def create_check_button(self):
         self.check_button = CTkButton(
@@ -119,7 +157,7 @@ class PasswordTool:
             font=("K2D", 24),
             fg_color="#17377D"
         )
-        self.check_button.grid(row=9, column=0, columnspan=2, pady=(10, 20))
+        self.check_button.grid(row=10, column=0, columnspan=2, pady=(10, 20))
 
     def check(self):
         charlist = ''
@@ -141,9 +179,12 @@ class PasswordTool:
             password = ''.join(random.choice(charlist) for _ in range(password_length))
             self.text_result.set(password)
 
+            self.label_result.configure(text=password)
+
             self.check_button.configure(text="Check Password Strength", fg_color="#17377D")
         else:
             self.text_result.set("No character set selected!")
+            self.label_result.configure(text="Your Password")
 
         end_time = time.time()
         elapsed_time = end_time - start_time
@@ -212,16 +253,15 @@ class PasswordTool:
         elif strength == "weak":
             return "#FFA500"
         elif strength == "good":
-            return "#FFD700"
+            return "#dba72c"
         elif strength == "strong":
             return "#66CC00"
         else:
             return "green"
 
+
 if __name__ == "__main__":
     root = CTk()
-    root.title("Password Tool")
     root.geometry("1024x768")
     app = PasswordTool(root)
     root.mainloop()
-
