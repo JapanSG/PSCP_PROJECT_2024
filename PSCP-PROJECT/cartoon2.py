@@ -178,17 +178,16 @@ class PasswordTool:
             password_length = int(self.slider.get())
             password = ''.join(random.choice(charlist) for _ in range(password_length))
             self.text_result.set(password)
-
             self.label_result.configure(text=password)
-
             self.check_button.configure(text="Check Password Strength", fg_color="#17377D")
         else:
             self.text_result.set("No character set selected!")
-            self.label_result.configure(text="Your Password")
+            self.label_result.configure(text="No character set selected!")
 
         end_time = time.time()
         elapsed_time = end_time - start_time
         self.time_label.configure(text=f"{elapsed_time:.10f}s")
+
 
     def run_generate_password(self):
         threading.Thread(target=self.generate_password).start()
