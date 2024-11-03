@@ -34,9 +34,25 @@ def get_pass(key:int)->str:
         dct = json.load(file)
         return dct[str(key)]
 
+def del_pass(key :int) -> None:
+    '''Delete a specific password'''
+    if os.path.exists(file_path) and os.path.getsize(file_path):
+        with open(file_path, "r") as file:
+            dct : dict = json.load(file)
+            dct.pop(str(key))
+            new_dct = {}
+            num = 1
+            for key in dct:
+                temp = {num : dct[key]}
+                new_dct.update(temp)
+                num += 1
+        with open(file_path, "w") as file:
+            json.dump(new_dct, file)
+    else: 
+        raise Exception
+
 def __main():
     '''Driver Code'''
-    clear_file()
-    add_password("test.com","Ray","12345678")
+
 if __name__ == "__main__":
     __main()
