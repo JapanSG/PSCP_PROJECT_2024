@@ -76,7 +76,7 @@ class ViewPasswordPage(CTkFrame):
         password = save.get_pass(num)
         self.label_frame = LabelFrame(self, password["website"], master)
         self.label_frame.pack(side = "top", fill = "x", padx = (70,70),pady = (40,25))
-        self.box = InformationBox(self, password)
+        self.box = InformationBox(self, password, num, master)
         self.box.pack(side = "top")
 
 class LabelFrame(CTkFrame):
@@ -103,7 +103,7 @@ class LabelFrame(CTkFrame):
 
 class InformationBox(CTkFrame):
     '''information_box'''
-    def __init__(self, master, data:dict):
+    def __init__(self, master, data:dict, num: int, app):
         '''Constructor'''
         super().__init__(
             master,
@@ -112,25 +112,86 @@ class InformationBox(CTkFrame):
             height = 271,
             corner_radius = 30
         )
+        self.data = data
         self.pack_propagate(0)
+        self.view = False
+        ## fields
+        self.format = CTkFrame(self,fg_color = BLUE)
+        self.format.pack(side ="top", fill = "x", pady = (30,0))
+        self.fields = CTkFrame(self.format, fg_color = BLUE)
+        self.fields.pack(side = "left", padx = 20)
         self.copy = CTkImage(light_image = Image.open(os.path.join(PATH,"Assets/content_copy.png")), size = (20,20))
 
         self.globe = CTkImage(light_image = Image.open(os.path.join(PATH,"Assets/Language.png")), size = (20,20))
-        self.sites = Field(self, "Sites", self.globe, data["website"], [self.copy])
-        self.sites.pack(side = "top", pady = (30,0))
+        self.sites = Field(self.fields, app, "Sites", self.globe, data["website"], [self.copy], [lambda : InformationBox.copy(app, data["website"])])
+        self.sites.pack(side = "top")
 
         self.person = CTkImage(light_image = Image.open(os.path.join(PATH,"Assets/Person.png")), size = (20,20))
-        self.username = Field(self, "Username", self.person, data["username"], [self.copy])
+        self.username = Field(self.fields, app, "Username", self.person, data["username"], [self.copy], [lambda : InformationBox.copy(app, data["username"])])
         self.username.pack(side = "top", pady = (30,0))
 
         self.key = CTkImage(light_image = Image.open(os.path.join(PATH,"Assets/Key.png")), size = (20,20))
         self.eye = CTkImage(light_image = Image.open(os.path.join(PATH,"Assets/Remove red eye.png")), size = (20,20))
-        self.password = Field(self, "Password", self.key, data["password"], [self.eye, self.copy])
+        self.password = Field(self.fields, app, "Password", self.key, "********", [self.eye, self.copy], [lambda : self.view_pass(app= app),lambda : InformationBox.copy(app, data["password"])])
         self.password.pack(side = "top", pady = (30,0))
+
+        ## buttons
+        self.buttons = CTkFrame(self.format, fg_color = BLUE)
+        self.buttons.pack(side = "right", padx = (0,40))
+        self.edit = CTkButton(
+            self.buttons,
+            font = H2,
+            text = "Edit",
+            text_color = WHITE,
+            fg_color = DARK_BLUE,
+            corner_radius = 30,
+            width = 104,
+            height = 45
+        )
+        self.edit.pack_propagate(0)
+        self.edit.pack(side = "top", pady = (20,0))
+
+        self.delete = CTkButton(
+            self.buttons,
+            font = H2,
+            text = "Delete",
+            text_color = WHITE,
+            fg_color = RED,
+            corner_radius = 30,
+            width = 104,
+            height = 45,
+            command = lambda : InformationBox.delete(num,app)
+        )
+        self.delete.pack_propagate(0)
+        self.delete.pack(side = "top", pady = (73,0))
+
+    def delete(num,app):
+        '''delete command'''
+        save.del_pass(num)
+        DelPopup(app)
+        app.page.destroy()
+        app.page = SavePage(app)
+        app.page.pack(side = "left")
+
+    def copy(app, text: str):
+        '''Copy to clip board'''
+        app.clipboard_clear()
+        app.clipboard_append(text)
+        app.update()
+
+    def view_pass(self, app):
+        '''view pass'''
+        if self.view:
+            self.password.data.configure(text = self.data["password"])
+            self.view = False
+        else:
+            self.password.data.configure(text = "********")
+            self.view = True
+        app.update()
 
 class Field(CTkFrame):
     '''Field for displaying information'''
-    def __init__(self, master ,label : str, icon : CTkImage, data : str, buttons : list = []): #buttons = (icon1,icon2) (CTkImage,CTkImage)
+    def __init__(self, master ,app, label : str, icon : CTkImage, data : str, buttons : list = [], command : list = []): #buttons = (icon1,icon2) (CTkImage,CTkImage)
         '''Constructor'''
         super().__init__(
             master,
@@ -143,7 +204,7 @@ class Field(CTkFrame):
 
         self.field = CTkFrame(self, fg_color = WHITE, corner_radius = 30, width = 272, height = 21,)
         self.field.propagate(0)
-        self.field.grid(column = 0, row = 1, sticky = "w",ipadx = 20, ipady = 1)
+        self.field.grid(column = 0, row = 1, sticky = "w")
 
         self.icon = CTkLabel(self.field, text = "", image = icon, fg_color = "transparent", width = 20, height = 20)
         self.icon.pack(side = "left", padx = (20,10))
@@ -151,12 +212,61 @@ class Field(CTkFrame):
         self.data = CTkLabel(self.field, text = data, font = P_BOLD, text_color = DARK_BLUE, fg_color = "transparent")
         self.data.pack(side = "left", padx = 10)
 
-        self.icon = [CTkButton(self.field, text = "", image = button_icon, fg_color = "transparent", width = 10, height = 20)  for button_icon in buttons]
-        for i in self.icon:
-            i.pack(side = "right", padx = (0,20))
+        length = len(buttons)
+        for i in range(length):
+            pad = 0
+            if not i:
+                pad = 10
+            button = CTkButton(
+                self.field,
+                text = "",
+                image = buttons[i],
+                fg_color = "transparent",
+                width = 10,
+                height = 20,
+                command = command[i]
+            )
+            button.pack(side = "right", padx = (0,pad))
+
+
+## delete popup
+class DelPopup(CTkToplevel):
+    '''Delete popup window'''
+    def __init__(self,master):
+        '''Constructor'''
+        super().__init__(master, fg_color = WHITE)
+
+        self.wait_visibility()
+
+        x = master.winfo_x() + master.winfo_width()//2 - self.winfo_width()//2
+        y = master.winfo_y() + master.winfo_height()//2 - self.winfo_height()//2
+        self.geometry(f"+{x}+{y}")
+        self.title("deleted")
+        self.resizable(width =False, height = False)
+
+        self.label = CTkLabel(
+            self,
+            fg_color = WHITE,
+            font = H2,
+            text = "Your password have been deleted",
+            text_color = DARK_BLUE
+        )
+        self.label.pack(side = "top", pady = 30)
+
+        self.button = CTkButton(
+            self,
+            fg_color = BLUE,
+            font = H2,
+            text = "OK",
+            text_color = WHITE,
+            command = self.destroy
+        )
+        self.button.pack(side = "top")
+        self.attributes("-topmost", True)
+        self.lift()
 
 def __main():
     '''Driver Code'''
-
+    DelPopup(1)
 if __name__ == "__main__":
     __main()
