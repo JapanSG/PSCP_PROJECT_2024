@@ -232,7 +232,6 @@ class Field(CTkFrame):
             )
             button.pack(side = "right", padx = (0,pad))
 
-
 ## delete popup
 class DelPopup(CTkToplevel):
     '''Delete popup window'''
@@ -269,6 +268,12 @@ class DelPopup(CTkToplevel):
         self.attributes("-topmost", True)
         self.lift()
 
+class EditPage(CTkFrame):
+    '''EditPage Class'''
+    def __init__(master):
+        '''Constructor'''
+        super().__init__(master)
+        
 def __main():
     '''Driver Code'''
     DelPopup(1)
