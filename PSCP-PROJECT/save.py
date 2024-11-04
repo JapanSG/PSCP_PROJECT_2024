@@ -51,8 +51,17 @@ def del_pass(key :int) -> None:
     else: 
         raise Exception
 
+def edit(key : int, website : str, username : str, password : str):
+    '''Edit password information at key'''
+    if os.path.exists(file_path) and os.path.getsize(file_path):
+        with open(file_path, "r") as file:
+            dct : dict = json.load(file)
+            dct[str(key)] = {"website" : website, "username" : username, "password" : password}
+        with open(file_path, "w") as file:
+            json.dump(dct, file)
+
 def __main():
     '''Driver Code'''
-
+    edit(1, "twitch.com", "chisanupong", "passwordPasswordPassword" )
 if __name__ == "__main__":
     __main()

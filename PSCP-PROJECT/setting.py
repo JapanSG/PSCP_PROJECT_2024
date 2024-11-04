@@ -1,5 +1,5 @@
 '''setting'''
 def init(function):
-    '''initilized'''
+    '''initilized global variable'''
     global CURRPAGE
     CURRPAGE = function
