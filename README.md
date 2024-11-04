@@ -1,4 +1,4 @@
-# Password Generator
+# EncryptMinds
 
 
 + ## รายละเอียดโปรเจคต์
