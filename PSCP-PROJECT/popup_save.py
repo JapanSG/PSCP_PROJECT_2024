@@ -20,7 +20,7 @@ class EditPopup:
         site_frame = CTkFrame(self.popup)
         site_frame.pack(pady=5)
         site_label = CTkLabel(site_frame, image=self.site_icon, text="", compound="left")  # Combine icon and text
-        site_label.pack(side="left")
+        site_label.pack(side="left", padx = (10,10))
         self.site_entry = CTkEntry(site_frame, width=200)
         self.site_entry.insert(0, "")
         self.site_entry.pack(side="right")
@@ -32,7 +32,7 @@ class EditPopup:
         username_frame = CTkFrame(self.popup)
         username_frame.pack(pady=5)
         username_label = CTkLabel(username_frame, image=self.username_icon, text="", compound="left")
-        username_label.pack(side="left")
+        username_label.pack(side="left", padx = (10,10))
         self.username_entry = CTkEntry(username_frame, width=200)
         self.username_entry.insert(0, "")
         self.username_entry.pack(side="right")
@@ -44,14 +44,14 @@ class EditPopup:
         password_frame = CTkFrame(self.popup)
         password_frame.pack(pady=5)
         password_label = CTkLabel(password_frame, image=self.password_icon, text="", compound="left")
-        password_label.pack(side="left")
+        password_label.pack(side="left", padx = (10,10))
         self.password_entry = CTkEntry(password_frame, show="*", width=200)
         self.password_entry.insert(0, "")
         self.password_entry.pack(side="left")
         
         self.show_icon = CTkImage(light_image=Image.open(os.path.join(PATH,"Assets/visibility_off.png")))
-        self.show_password_button = CTkButton(password_frame, text="", command=self.toggle_password_visibility, width=10,image=self.show_icon)
-        self.show_password_button.pack(side="left", padx=(5, 0))
+        self.show_password_button = CTkButton(password_frame, text="",fg_color = "transparent", command=self.toggle_password_visibility, width=10,image=self.show_icon)
+        self.show_password_button.pack(side="left", padx=(5, 5))
         self.password_visible = False #ตัวแปรกำหนดค่าปุ่มshow/hid
         # Buttons
         button_frame = CTkFrame(self.popup, fg_color="transparent")
@@ -73,10 +73,8 @@ class EditPopup:
     def toggle_password_visibility(self):
         if self.password_visible:
             self.password_entry.configure(show="*") # Hide the password
-            self.show_password_button.configure(text="Show")
         else:
             self.password_entry.configure(show="") # Show the password
-            self.show_password_button.configure(text="Hide")
         self.password_visible = not self.password_visible # Toggle the state
 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@ from customtkinter import *
 from PIL import Image
 from cartoon2 import PasswordTool
 from save_page import *
+from style import *
 import setting
 
 H1 = ("K2D",24)
