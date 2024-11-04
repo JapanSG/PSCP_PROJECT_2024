@@ -5,6 +5,7 @@ from customtkinter import *
 from PIL import Image
 from Chisanupong import PasswordGeneratorApp
 from save_page import *
+from style import *
 import setting
 
 H1 = ("K2D",24)
