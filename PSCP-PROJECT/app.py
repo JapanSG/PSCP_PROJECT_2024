@@ -3,7 +3,7 @@ import os
 from tkinter import *
 from customtkinter import *
 from PIL import Image
-from Chisanupong import PasswordGeneratorApp
+from cartoon2 import PasswordTool
 from save_page import *
 import setting
 
@@ -20,7 +20,7 @@ class page1(CTkFrame):
     def __init__(self,master):
         '''Constructor'''
         super().__init__(master,fg_color=BLUE,corner_radius =50,border_color=WHITE,border_width=30)
-        self.password_app = PasswordGeneratorApp(self)
+        self.password_app = PasswordTool(self)
 class page2(CTkFrame):
     '''Page 2'''
     def __init__(self,master):
