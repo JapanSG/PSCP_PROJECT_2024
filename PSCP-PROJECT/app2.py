@@ -9,7 +9,7 @@ WHITE = "#E3F1FB"
 BLUE = "#1650CC"
 DARK_BLUE = "#17377D"
 LIGHT_BLUE = "#8AA7E6"
-
+from popup_save import EditPopup
 PATH = os.path.dirname(os.path.dirname(__file__))
 
 class page1(CTkFrame):
@@ -20,10 +20,14 @@ class page1(CTkFrame):
         self.password_app = PasswordTool(self)
 class page2(CTkFrame):
     '''Page 2'''
+    def open_edit_popup(self):
+        '''Method to open the EditPopup'''
+        EditPopup(self)
     def __init__(self,master):
         '''Constructor'''
         super().__init__(master,fg_color= 'blue',corner_radius = 0)
-
+        open_button = CTkButton(master, text="Open Edit Popup", command=self.open_edit_popup)
+        open_button.pack(pady=20)
 class page3(CTkFrame):
     '''Page 3'''
     def __init__(self,master):
