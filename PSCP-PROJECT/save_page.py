@@ -5,6 +5,7 @@ from tkinter import *
 from customtkinter import *
 from PIL import Image
 from style import *
+import setting
 
 PATH = os.path.dirname(os.path.dirname(__file__))
 
@@ -62,6 +63,7 @@ class ViewPassButton(CTkFrame):
         master.page.destroy()
         master.page = ViewPasswordPage(master,self.key)
         master.page.pack(side = "left", expand = True, fill = "both")
+        setting.CURRPAGE = lambda app : ViewPasswordPage(app,self.key)
 
 ## View Password Page
 class ViewPasswordPage(CTkFrame):
@@ -100,6 +102,7 @@ class LabelFrame(CTkFrame):
         app.page.destroy()
         app.page = SavePage(app)
         app.page.pack(side = 'left')
+        setting.CURRPAGE = SavePage
 
 class InformationBox(CTkFrame):
     '''information_box'''
@@ -172,6 +175,7 @@ class InformationBox(CTkFrame):
         app.page.destroy()
         app.page = SavePage(app)
         app.page.pack(side = "left")
+        setting.CURRPAGE = SavePage
 
     def copy(app, text: str):
         '''Copy to clip board'''
