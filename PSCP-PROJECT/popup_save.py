@@ -62,6 +62,8 @@ class EditPopup:
 
         confirm_button = CTkButton(button_frame, text="Confirm", command=self.on_confirm, width=100)
         confirm_button.pack(side="right", padx=5)
+        
+        self.popup.attributes("-topmost", True)
 
 
     def on_confirm(self):
