@@ -10,7 +10,7 @@ class EditPopup:
         self.popup = CTkToplevel(master)
         self.popup.geometry("350x300")
         self.popup.title("Edit")
-        self.popup.configure(bg_color="white")  # Change background color
+        self.popup.configure(fg_color="white")  # Change background color
 
         # Widgets inside the popup
         CTkLabel(self.popup, text="Sites", font=("K2D", 14)).pack(pady=(10, 0))
