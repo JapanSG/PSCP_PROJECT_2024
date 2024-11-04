@@ -4,6 +4,9 @@ from tkinter import *
 from customtkinter import *
 from PIL import Image
 from Chisanupong import PasswordGeneratorApp
+from save_page import *
+import setting
+
 H1 = ("K2D",24)
 WHITE = "#E3F1FB"
 BLUE = "#1650CC"
@@ -22,21 +25,24 @@ class page2(CTkFrame):
     '''Page 2'''
     def __init__(self,master):
         '''Constructor'''
-        super().__init__(master,fg_color= 'blue',corner_radius = 0)
-
+        super().__init__(master, corner_radius = 0)
+    
 class page3(CTkFrame):
     '''Page 3'''
     def __init__(self,master):
         '''Constructor'''
         super().__init__(master,fg_color= 'red',corner_radius = 0)
 
+
 pages ={
     1 : page1,
-    2 : page2,
+    2 : SavePage,
     3 : page3
 }
 
-curr_page = pages[1]
+setting.init(pages[1])
+
+setting.CURRPAGE = pages[1]
 
 class App(CTk):
     '''App Class'''
@@ -50,7 +56,7 @@ class App(CTk):
         self.navbar = NavBar(self)
         self.navbar.pack(side = "left",fill = "y")
         self.navbar.pack_propagate(False)
-        self.page = curr_page(self)
+        self.page = setting.CURRPAGE(self)
         self.page.pack(side = "left", expand = True,fill = "both")
 
 class NavBarClose(CTkFrame):
@@ -71,12 +77,11 @@ class NavBarClose(CTkFrame):
 
     def open(app:App):
         '''open Menu'''
-        global curr_page
         app.navbar.destroy()
         app.navbar = NavBar(app)
         app.navbar.pack(side = "left", fill = "y")
         app.page.destroy()
-        app.page = curr_page(app)
+        app.page = setting.CURRPAGE(app)
         app.page.pack(side = "left", expand = True,fill = "both")
 
 class NavBar(CTkFrame):
@@ -165,12 +170,11 @@ class TitleFrame(CTkFrame):
 
     def close(app:App):
         '''close menu'''
-        global curr_page
         app.navbar.destroy()
         app.navbar = NavBarClose(app)
         app.navbar.pack(side = "left",fill = "y")
         app.page.destroy()
-        app.page = curr_page(app)
+        app.page = setting.CURRPAGE(app)
         app.page.pack(side = "left", expand = True, fill = "both")
 
 class NavButton(CTkFrame):
@@ -229,7 +233,6 @@ class NavButton(CTkFrame):
 
     def change_page(self,app:App,page:CTk):
         '''Change page'''
-        global curr_page
         app.page.destroy()
         app.page = page(app)
         app.page.pack(side ='left',expand = True, fill = "both")
@@ -246,7 +249,7 @@ class NavButton(CTkFrame):
         self.icon_label.configure(
             image = self.imgW
         )
-        curr_page = page
+        setting.CURRPAGE = page
         
 def run():
     '''Driver Code'''
