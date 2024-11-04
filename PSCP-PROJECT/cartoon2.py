@@ -296,26 +296,17 @@ class PasswordTool:
         text = self.text_result.get()
         if text == "No character set selected!" or text == "":
             self.label_result.configure(text="Nothing to copy!")
-            self.label_result.after(2000, lambda: self.label_result.configure(text="Your Password"))
+            self.label_result.after(1000, lambda: self.label_result.configure(text="Your Password"))
         else:
             self.master.clipboard_clear()
             self.master.clipboard_append(text)
             self.reset_placeholders()
             self.show_copied_feedback()
-            # text = self.text_result.get()
-            # self.master.clipboard_clear()
-            # self.master.clipboard_append(text)
-            # self.reset_placeholders()
-            # self.show_copied_feedback()
 
     def show_copied_feedback(self):
         original_text = self.label_result.cget("text")
         self.label_result.configure(text="Copied!")
         self.label_result.after(1000, lambda: self.label_result.configure(text=original_text))
-        # original_text = self.label_result.cget("text")
-        # original_color = self.label_result.cget("text_color")
-        # self.label_result.configure(text="Copied!", text_color="#5BB844")
-        # self.label_result.after(1000, lambda: self.label_result.configure(text=original_text, text_color=original_color))
 
 
     def generate_password(self):
@@ -344,11 +335,6 @@ class PasswordTool:
                 self.username_entry.insert(0, "Enter your username")
 
             self.time_label.configure(text="")
-            # self.site_entry.delete(0, "end")
-            # self.site_entry.insert(0, "Enter your site")
-            # self.username_entry.delete(0, "end")
-            # self.username_entry.insert(0, "Enter your username")
-            # self.time_label.configure(text="")
 
     def run_generate_password(self):
         if self.site_entry.get() == "Enter your site":
