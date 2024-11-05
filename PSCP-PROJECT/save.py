@@ -62,6 +62,6 @@ def edit(key : int, website : str, username : str, password : str):
 
 def __main():
     '''Driver Code'''
-    edit(1, "twitch.com", "chisanupong", "passwordPasswordPassword" )
+    add_password("add","test","2345")
 if __name__ == "__main__":
     __main()

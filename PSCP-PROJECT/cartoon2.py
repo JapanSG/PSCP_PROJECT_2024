@@ -5,7 +5,7 @@ import string
 import random
 from PIL import Image
 import os
-
+from save import add_password
 PATH = os.path.dirname(os.path.dirname(__file__))
 H1 = ("K2D", 24)
 
@@ -23,7 +23,8 @@ class PasswordTool:
         self.check_punctuation = StringVar(value="off")
         self.text_result = StringVar(value="")
         self.time_label = CTkLabel(self.frame, text="", font=("K2D", 14), text_color="#ebf2f5")
-
+        self.entry_web_value = StringVar(value="")
+        self.entry_user_value = StringVar(value="")
         self.create_ui()
 
     def create_ui(self):
@@ -148,7 +149,7 @@ class PasswordTool:
             text_color="#4969AE",
             fg_color="#BDE4FF",
             border_width=0,
-
+            textvariable=self.entry_web_value
         )
         self.site_entry.insert(0, "Enter your site")
         self.site_entry.bind("<FocusIn>", self.clear_site_placeholder)
@@ -191,7 +192,8 @@ class PasswordTool:
             font=("K2D", 20),
             text_color="#4969AE",
             fg_color="#BDE4FF",
-            border_width=0
+            border_width=0,
+            textvariable=self.entry_user_value
         )
         self.username_entry.insert(0, "Enter your username")
         self.username_entry.bind("<FocusIn>", self.clear_username_placeholder)
@@ -428,7 +430,8 @@ class PasswordTool:
 
     def save_password(self):
         self.reset_placeholders()
-    #ใส่โค้ด save ตั้งแต่บรรทัดนี้
+        add_password(self.entry_web_value,self.entry_user_value,self.text_result)
+     
 
 
 if __name__ == "__main__":
