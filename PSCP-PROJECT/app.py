@@ -6,6 +6,7 @@ from PIL import Image
 from cartoon2 import PasswordTool
 from save_page import *
 from style import *
+from MUFTEE import EncodeDecodeApp
 import setting
 
 H1 = ("K2D",24)
@@ -32,8 +33,8 @@ class page3(CTkFrame):
     '''Page 3'''
     def __init__(self,master):
         '''Constructor'''
-        super().__init__(master,fg_color= 'red',corner_radius = 0)
-
+        super().__init__(master,fg_color= WHITE,corner_radius = 0)
+        self.decode = EncodeDecodeApp(self)
 
 pages ={
     1 : page1,
@@ -53,7 +54,7 @@ class App(CTk):
 
         self.geometry("1024x768")
         self.title("Password Generator")
-        self.resizable(width =False, height = False)
+        # self.resizable(width =False, height = False)
         self.navbar = NavBar(self)
         self.navbar.pack(side = "left",fill = "y")
         self.navbar.pack_propagate(False)

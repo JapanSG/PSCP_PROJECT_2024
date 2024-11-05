@@ -19,8 +19,8 @@ class SavePage(CTkFrame):
             fg_color = WHITE,
             corner_radius = 0
         )
-        self.scroll = CTkScrollableFrame(self, fg_color=WHITE, width = 1000, height = 1000, corner_radius = 0)
-        self.scroll.pack(side = "left", expand = True)
+        self.scroll = CTkScrollableFrame(self, fg_color=WHITE, width = 2000, height = 1000, corner_radius = 0)
+        self.scroll.pack(side = "left", expand = True, fill = "x")
         self.label = CTkLabel(self.scroll, text = "Password Viewer", text_color = DARK_BLUE, font = H1_BOLD)
         self.label.pack(side = "top",pady = (40,15))
         self.list = CTkFrame(self.scroll, fg_color = BLUE, corner_radius=30, width = 421, height = 1000)
@@ -262,7 +262,7 @@ class DelPopup(CTkToplevel):
             text = "Your password have been deleted",
             text_color = DARK_BLUE
         )
-        self.label.pack(side = "top", pady = 30)
+        self.label.pack(side = "top", pady = 30, padx = 20)
 
         self.button = CTkButton(
             self,
@@ -272,7 +272,7 @@ class DelPopup(CTkToplevel):
             text_color = WHITE,
             command = self.destroy
         )
-        self.button.pack(side = "top")
+        self.button.pack(side = "top", pady = (0,30))
         self.attributes("-topmost", True)
         self.lift()
 
