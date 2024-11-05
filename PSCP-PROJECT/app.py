@@ -9,8 +9,8 @@ from style import *
 from MUFTEE import EncodeDecodeApp
 import setting
 
-PATH = os.path.dirname(os.path.dirname(__file__))
-
+PATH = os.path.dirname(__file__)
+print(PATH)
 class page1(CTkFrame):
     '''Page 1'''
     def __init__(self,master):

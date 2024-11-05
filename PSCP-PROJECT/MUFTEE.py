@@ -1,6 +1,7 @@
 import customtkinter
 import tkinter
 import base64
+from style import *
 
 H1 = ("K2D", 24)
 
@@ -27,7 +28,8 @@ class EncodeDecodeApp:
             text="Encode/Decode",
             corner_radius=60,
             font=("K2D", 30),
-            fg_color="white",
+            fg_color= WHITE,
+            text_color = DARK_BLUE,
             width=200,
             height=50
         )
@@ -71,6 +73,7 @@ class EncodeDecodeApp:
             width=120,
             height=32,
             corner_radius=8,
+            text_color = DARK_BLUE,
             fg_color="#34D399",
             hover_color="#059669",
             command=self.encode_message
@@ -84,6 +87,7 @@ class EncodeDecodeApp:
             width=120,
             height=32,
             corner_radius=8,
+            text_color = DARK_BLUE,
             fg_color="#93C5FD",
             hover_color="#3B82F6",
             command=self.decode_message
