@@ -19,8 +19,8 @@ class SavePage(CTkFrame):
             fg_color = WHITE,
             corner_radius = 0
         )
-        self.scroll = CTkScrollableFrame(self, fg_color=WHITE, width = 1000, height = 1000, corner_radius = 0)
-        self.scroll.pack(side = "left", expand = True)
+        self.scroll = CTkScrollableFrame(self, fg_color=WHITE, width = 2000, height = 1000, corner_radius = 0)
+        self.scroll.pack(side = "left", expand = True, fill = "x")
         self.label = CTkLabel(self.scroll, text = "Password Viewer", text_color = DARK_BLUE, font = H1_BOLD)
         self.label.pack(side = "top",pady = (40,15))
         self.list = CTkFrame(self.scroll, fg_color = BLUE, corner_radius=30, width = 421, height = 1000)
@@ -115,6 +115,7 @@ class InformationBox(CTkFrame):
             height = 271,
             corner_radius = 30
         )
+        self.num = num
         self.data = data
         self.pack_propagate(0)
         self.view = False
@@ -141,7 +142,7 @@ class InformationBox(CTkFrame):
         ## buttons
         self.buttons = CTkFrame(self.format, fg_color = BLUE)
         self.buttons.pack(side = "right", padx = (0,40))
-        self.edit = CTkButton(
+        self.edit_btn = CTkButton(
             self.buttons,
             font = H2,
             text = "Edit",
@@ -149,12 +150,14 @@ class InformationBox(CTkFrame):
             fg_color = DARK_BLUE,
             corner_radius = 30,
             width = 104,
-            height = 45
+            height = 45,
+            command = lambda : self.edit(app)
         )
-        self.edit.pack_propagate(0)
-        self.edit.pack(side = "top", pady = (20,0))
+        self.edit_btn.pack_propagate(0)
+        self.edit_btn.pack(side = "top", pady = (20,0))
 
-        self.delete = CTkButton(
+
+        self.delete_btn = CTkButton(
             self.buttons,
             font = H2,
             text = "Delete",
@@ -165,8 +168,8 @@ class InformationBox(CTkFrame):
             height = 45,
             command = lambda : InformationBox.delete(num,app)
         )
-        self.delete.pack_propagate(0)
-        self.delete.pack(side = "top", pady = (73,0))
+        self.delete_btn.pack_propagate(0)
+        self.delete_btn.pack(side = "top", pady = (73,0))
 
     def delete(num,app):
         '''delete command'''
@@ -186,12 +189,17 @@ class InformationBox(CTkFrame):
     def view_pass(self, app):
         '''view pass'''
         if self.view:
-            self.password.data.configure(text = self.data["password"])
+            self.password.data.configure(text = "********")
             self.view = False
         else:
-            self.password.data.configure(text = "********")
+            self.password.data.configure(text = self.data["password"])
             self.view = True
         app.update()
+
+    def edit(self, app):
+        '''Edit'''
+        EditPopup(app, self.data, self.num)
+
 
 class Field(CTkFrame):
     '''Field for displaying information'''
@@ -244,7 +252,7 @@ class DelPopup(CTkToplevel):
         x = master.winfo_x() + master.winfo_width()//2 - self.winfo_width()//2
         y = master.winfo_y() + master.winfo_height()//2 - self.winfo_height()//2
         self.geometry(f"+{x}+{y}")
-        self.title("deleted")
+        self.title("Deleted")
         self.resizable(width =False, height = False)
 
         self.label = CTkLabel(
@@ -254,7 +262,7 @@ class DelPopup(CTkToplevel):
             text = "Your password have been deleted",
             text_color = DARK_BLUE
         )
-        self.label.pack(side = "top", pady = 30)
+        self.label.pack(side = "top", pady = 30, padx = 20)
 
         self.button = CTkButton(
             self,
@@ -264,18 +272,147 @@ class DelPopup(CTkToplevel):
             text_color = WHITE,
             command = self.destroy
         )
-        self.button.pack(side = "top")
+        self.button.pack(side = "top", pady = (0,30))
         self.attributes("-topmost", True)
         self.lift()
 
-class EditPage(CTkFrame):
+##Edit Poppup
+class EditPopup(CTkToplevel):
     '''EditPage Class'''
-    def __init__(master):
+    def __init__(self, master, data:dict, num:int):
         '''Constructor'''
-        super().__init__(master)
+        super().__init__(master, fg_color = BLUE)
+
+        self.wait_visibility()
         
+        self.view = False
+
+        x = master.winfo_x() + master.winfo_width()//2 - self.winfo_width()//2
+        y = master.winfo_y() + master.winfo_height()//2 - self.winfo_height()//2
+        self.geometry(f"+{x}+{y}")
+        self.title("Edit")
+        self.resizable(width =False, height = False)
+        self.data = data
+        self.num = num
+
+        self.label_frame = CTkFrame(self, fg_color= BLUE)
+        self.label_frame.pack(side = "top", fill = "x")
+        CTkLabel(self.label_frame, text="Edit", font=H1, text_color = WHITE).pack(side = "left", pady=(10, 30), padx = 25)
+
+        self.globe_img = CTkImage(light_image = Image.open(os.path.join(PATH,"Assets/Language.png")), size = (20,20))
+        self.sites = EditEntry(self, "Site", data["website"], self.globe_img)
+        self.sites.pack(side = "top", padx = 25)
+
+        self.person_img = CTkImage(light_image = Image.open(os.path.join(PATH,"Assets/Person.png")), size = (20,20))
+        self.username = EditEntry(self, "Username", data["username"], self.person_img)
+        self.username.pack(side = "top", pady = (30,0), padx = 25)
+
+        self.key_img = CTkImage(light_image = Image.open(os.path.join(PATH,"Assets/Key.png")), size = (20,20))
+        self.eye = CTkImage(light_image = Image.open(os.path.join(PATH,"Assets/Remove red eye.png")), size = (20,20))
+        self.password = EditEntry(self, "Password", "*****", self.key_img)
+        self.eye_btn = CTkButton(
+            self.password.field,
+            text = "",
+            image = self.eye,
+            fg_color = WHITE,
+            width = 20,
+            height = 20,
+            command = lambda : self.show(master)
+        )
+        self.eye_btn.pack(side = "left", padx = (0,10))
+        self.password.pack(side = "top", pady = (30,0), padx = 25)
+
+        self.buttons = CTkFrame(self, fg_color = BLUE)
+        self.buttons.pack(side = "top", pady = (50,35))
+        self.cancel = CTkButton(self.buttons, fg_color = WHITE, text = "Cancel", text_color = DARK_BLUE, font = P_BOLD, corner_radius = 30, command = self.destroy)
+        self.cancel.pack(side = "left", padx = 5)
+        self.confirm_btn = CTkButton(self.buttons, fg_color = WHITE, text = "Confirm", text_color = DARK_BLUE, font = P_BOLD, corner_radius = 30, command = lambda : self.confirm(master))
+        self.confirm_btn.pack(side = "right", padx = 5)
+
+        self.attributes("-topmost", True)
+        self.lift()
+
+    def confirm(self, app):
+        '''Confirm edit'''
+        website = self.sites.get()
+        if not website:
+            website = self.data["website"]
+        username = self.username.get()
+        if not username:
+            username = self.data["username"]
+        password = self.password.get()
+        if not password:
+            password = self.data["password"]
+        save.edit(self.num, website, username, password)
+        app.page.destroy()
+        app.page = SavePage(app)
+        app.page.pack(side = "left")
+        setting.CURRPAGE = SavePage
+        self.destroy()
+    
+    def show(self, app):
+        '''Show password in entry'''
+        if self.view:
+            self.password.entry.configure(placeholder_text = "*****")
+            self.view = False
+        else:
+            self.password.entry.configure(placeholder_text = self.data["password"])
+            self.view = True
+        app.update()
+
+class EditEntry(CTkFrame):
+    '''Edit Entry Field'''
+    def __init__(self, master, label:str, data:str, icon:CTkImage):
+        '''Constructor'''
+        super().__init__(master, fg_color = BLUE)
+
+        self.label = CTkLabel(
+            self,
+            text = label,
+            font = P_BOLD,
+            text_color = WHITE,
+            fg_color = BLUE
+        )
+        self.label.grid(column = 0, row = 0, sticky = "w")
+
+        self.field = CTkFrame(
+            self,
+            fg_color = WHITE,
+            corner_radius = 30,
+            width = 272,
+            height = 21,
+        )
+        self.field.pack_propagate(0)
+        self.field.grid(column = 0, row = 1)
+
+        self.img = CTkLabel(
+            self.field,
+            text = "",
+            image = icon,
+            width = 20,
+            height = 20
+        )
+        self.img.pack(side = "left", padx = (10,0))
+
+        self.entry = CTkEntry(
+            self.field,
+            font = P_BOLD,
+            placeholder_text = data,
+            placeholder_text_color = DARK_BLUE,
+            text_color = DARK_BLUE,
+            fg_color = WHITE,
+            border_color = WHITE,
+            width = 185,
+            height = 20,
+            corner_radius = 30
+        )
+        self.entry.pack(side = "left",padx = (10,0))
+    def get(self):
+        '''Get str in entry'''
+        return self.entry.get()
+
 def __main():
     '''Driver Code'''
-    DelPopup(1)
+
 if __name__ == "__main__":
     __main()
