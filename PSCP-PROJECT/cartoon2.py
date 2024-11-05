@@ -430,7 +430,7 @@ class PasswordTool:
 
     def save_password(self):
         self.reset_placeholders()
-        add_password(self.entry_web_value,self.entry_user_value,self.text_result)
+        add_password(self.entry_web_value.get(),self.entry_user_value.get(),self.text_result.get())
      
 
 
