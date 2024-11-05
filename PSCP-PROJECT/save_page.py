@@ -7,7 +7,7 @@ from PIL import Image
 from style import *
 import setting
 
-PATH = os.path.dirname(os.path.dirname(__file__))
+PATH = os.path.dirname(__file__)
 
 ## Main Save Page
 class SavePage(CTkFrame):

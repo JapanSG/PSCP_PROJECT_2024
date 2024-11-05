@@ -7,7 +7,7 @@ from PIL import Image
 import os
 from save import add_password
 from style import *
-PATH = os.path.dirname(os.path.dirname(__file__))
+PATH = os.path.dirname(__file__)
 H1 = ("K2D", 24)
 
 class PasswordTool:

@@ -1,7 +1,7 @@
 '''save'''
 import os
 import json
-PATH = os.path.dirname(os.path.dirname(__file__))
+PATH = os.path.dirname(__file__)
 file_path = os.path.join(PATH,"password.json")
 
 def add_password(website:str, username : str, password : str) -> None:
