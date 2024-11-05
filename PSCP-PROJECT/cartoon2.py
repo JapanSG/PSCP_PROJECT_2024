@@ -6,6 +6,7 @@ import random
 from PIL import Image
 import os
 from save import add_password
+from style import *
 PATH = os.path.dirname(os.path.dirname(__file__))
 H1 = ("K2D", 24)
 
@@ -13,8 +14,8 @@ class PasswordTool:
     def __init__(self, master):
         self.master = master
 
-        self.frame = CTkFrame(master, fg_color="transparent")
-        self.frame.pack(expand=True, anchor="center")
+        self.frame = CTkFrame(master, fg_color=BLUE, corner_radius = 30)
+        self.frame.pack(expand=True, anchor="center", ipady = 20)
 
         self.length_label_var = StringVar(value="0")
         self.check_upper = StringVar(value="off")
@@ -216,7 +217,7 @@ class PasswordTool:
             self.frame,
             text="Your Password",
             width=324,
-            height=37,
+            height=39,
             text_color="#71797e",
             font=("K2D", 20),
             fg_color=("#E3F1FB"),
@@ -263,14 +264,15 @@ class PasswordTool:
             master=self.frame,
             width=20,
             height=20,
-            fg_color="#E3F1FB",
+            fg_color= WHITE,
+            bg_color = WHITE,
             command=self.copys,
             text="",
             image=self.copy_image,
             corner_radius=0,
             hover_color="#E3F1FB"
         )
-        result.place(in_=self.label_result, relx=0.95, rely=0.5, anchor="center")
+        result.place(in_=self.label_result, relx=0.94, rely=0.50, anchor="center")
 
         result.bind("<Enter>", lambda event: self.on_enter(result))
         result.bind("<Leave>", lambda event: self.on_leave(result))

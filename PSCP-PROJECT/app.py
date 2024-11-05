@@ -9,19 +9,13 @@ from style import *
 from MUFTEE import EncodeDecodeApp
 import setting
 
-H1 = ("K2D",24)
-WHITE = "#E3F1FB"
-BLUE = "#1650CC"
-DARK_BLUE = "#17377D"
-LIGHT_BLUE = "#8AA7E6"
-
 PATH = os.path.dirname(os.path.dirname(__file__))
 
 class page1(CTkFrame):
     '''Page 1'''
     def __init__(self,master):
         '''Constructor'''
-        super().__init__(master,fg_color=BLUE,corner_radius =50,border_color=WHITE,border_width=30)
+        super().__init__(master,fg_color=WHITE,corner_radius =50,border_color=WHITE,border_width=30)
         self.password_app = PasswordTool(self)
 class page2(CTkFrame):
     '''Page 2'''
