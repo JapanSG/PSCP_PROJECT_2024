@@ -21,6 +21,8 @@
 
 + ## Demo
 
++   #### https://github.com/JapanSG/PSCP_PROJECT_2024/releases/tag/v0.0.2
+
 
 + ## Authors
 
