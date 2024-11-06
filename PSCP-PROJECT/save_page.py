@@ -6,7 +6,7 @@ from customtkinter import *
 from PIL import Image
 from style import *
 import setting
-
+import time
 PATH = os.path.dirname(__file__)
 
 ## Main Save Page
@@ -359,6 +359,7 @@ class EditPopup(CTkToplevel):
             self.password.entry.configure(placeholder_text = self.data["password"])
             self.view = True
         app.update()
+        app.focus()
 
 class EditEntry(CTkFrame):
     '''Edit Entry Field'''
