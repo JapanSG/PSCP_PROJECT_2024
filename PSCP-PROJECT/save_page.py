@@ -156,7 +156,6 @@ class InformationBox(CTkFrame):
         self.edit_btn.pack_propagate(0)
         self.edit_btn.pack(side = "top", pady = (20,0))
 
-
         self.delete_btn = CTkButton(
             self.buttons,
             font = H2,

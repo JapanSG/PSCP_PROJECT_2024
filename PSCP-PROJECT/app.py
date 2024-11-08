@@ -246,7 +246,7 @@ class NavButton(CTkFrame):
             image = self.imgW
         )
         setting.CURRPAGE = page
-        
+
 def run():
     '''Driver Code'''
     app = App()
