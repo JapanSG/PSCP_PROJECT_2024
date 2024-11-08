@@ -17,12 +17,7 @@ class page1(CTkFrame):
         '''Constructor'''
         super().__init__(master,fg_color=WHITE,corner_radius =50,border_color=WHITE,border_width=30)
         self.password_app = PasswordTool(self)
-class page2(CTkFrame):
-    '''Page 2'''
-    def __init__(self,master):
-        '''Constructor'''
-        super().__init__(master, corner_radius = 0)
-    
+
 class page3(CTkFrame):
     '''Page 3'''
     def __init__(self,master):
