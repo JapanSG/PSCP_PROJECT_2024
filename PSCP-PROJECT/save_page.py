@@ -6,7 +6,7 @@ from customtkinter import *
 from PIL import Image
 from style import *
 import setting
-import time
+
 PATH = os.path.dirname(__file__)
 
 ## Main Save Page
